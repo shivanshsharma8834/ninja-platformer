@@ -1,10 +1,11 @@
+# Imported Main Game Libraries
 import pygame
-
 import sys
 
+# Importing other scripts to the app
 from scripts.entities import PhysicsEntity
 from scripts.utils import *
-
+from scripts.tilemap import Tilemap 
 
 class Game:
 
@@ -17,8 +18,6 @@ class Game:
         self.screen = pygame.display.set_mode((640,480))
 
         self.display = pygame.Surface((320,240))
-
-
 
         self.clock = pygame.time.Clock()
 
@@ -34,15 +33,19 @@ class Game:
             'player' : load_image('entities/player.png')
         }
 
-        print(self.assets)
+        self.tilemap = Tilemap(self,tile_size=16)
 
     def run(self):
 
         while True:
             self.display.fill((14,219,248))
             
-            self.player.update((self.movement[1] - self.movement[0],0))
-            self.player.render(self.display)
+            self.tilemap.render(self.display)
+
+            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0)) # Update player variables
+            self.player.render(self.display) # Render the player 
+
+            print(self.tilemap.physics_rects_around(self.player.pos))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

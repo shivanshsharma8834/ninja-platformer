@@ -1,8 +1,10 @@
 import pygame 
 
-class PhysicsEntity:
 
-    def __init__(self,game, e_type, pos, size):
+
+class PhysicsEntity: # Creating a general Physics Entity object
+
+    def __init__(self,game, e_type, pos, size): # Initializes the entity object
 
         self.game = game
         self.type = e_type
@@ -10,14 +12,41 @@ class PhysicsEntity:
         self.size = size
         self.velocity = [0,0]
 
+    def rect(self):
 
-    def update(self,movement=(0,0)):
+        return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
+
+
+    def update(self,tilemap, movement=(0,0)): # Updates the entity movement
         
-        frame_movement = (movement[0] + self.velocity[0],movement[1] + self.velocity[1])
+        frame_movement = (movement[0] + self.velocity[0], movement[1] + self.velocity[1])
+
+        self.velocity[1] = min(5, self.velocity[1] + 0.1)
 
         self.pos[0] += frame_movement[0] 
+        
+        entity_rect = self.rect()
+        for rect in tilemap.physics_rects_around(self.pos):
+            if entity_rect.colliderect(rect):
+                if frame_movement[0] > 0:
+                    entity_rect.right = rect.left
+                if frame_movement[0] < 0:
+                    entity_rect.left = rect.right
+                
+                self.pos[0] = entity_rect.x
+
         self.pos[1] += frame_movement[1]
 
-    def render(self,surf):
+        entity_rect = self.rect()
+        for rect in tilemap.physics_rects_around(self.pos):
+            if entity_rect.colliderect(rect):
+                if frame_movement[1] > 0:
+                    entity_rect.bottom = rect.top
+                if frame_movement[1] < 0:
+                    entity_rect.top = rect.bottom
+                
+                self.pos[1] = entity_rect.y
+
+    def render(self,surf): # Renders the entity on the screen
 
         surf.blit(self.game.assets['player'],self.pos)
