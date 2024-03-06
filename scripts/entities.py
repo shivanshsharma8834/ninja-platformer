@@ -11,6 +11,7 @@ class PhysicsEntity: # Creating a general Physics Entity object
         self.pos = list(pos)
         self.size = size
         self.velocity = [0,0]
+        self.collisions = { 'up': False, 'down': False, 'right': False, 'left':False }
 
     def rect(self):
 
@@ -18,6 +19,8 @@ class PhysicsEntity: # Creating a general Physics Entity object
 
 
     def update(self,tilemap, movement=(0,0)): # Updates the entity movement
+
+        self.collisions = { 'up': False, 'down': False, 'right': False, 'left':False }
         
         frame_movement = (movement[0] + self.velocity[0], movement[1] + self.velocity[1])
 
@@ -30,8 +33,10 @@ class PhysicsEntity: # Creating a general Physics Entity object
             if entity_rect.colliderect(rect):
                 if frame_movement[0] > 0:
                     entity_rect.right = rect.left
+                    self.collisions['right'] = True
                 if frame_movement[0] < 0:
                     entity_rect.left = rect.right
+                    self.collisions['left'] = True 
                 
                 self.pos[0] = entity_rect.x
 
@@ -42,10 +47,17 @@ class PhysicsEntity: # Creating a general Physics Entity object
             if entity_rect.colliderect(rect):
                 if frame_movement[1] > 0:
                     entity_rect.bottom = rect.top
+                    self.collisions['down'] = True
                 if frame_movement[1] < 0:
                     entity_rect.top = rect.bottom
+                    self.collisions['up'] = True
                 
                 self.pos[1] = entity_rect.y
+
+        if self.collisions['up'] or self.collisions['down']:
+
+            self.velocity[1] = 0
+
 
     def render(self,surf): # Renders the entity on the screen
 
