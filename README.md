@@ -7,6 +7,12 @@ A simple platformer game implemented using Pygame
 Python v3.12 or greater 
 Pygame v2.5.2 or greater
 ```
+
+### Install Pygame
+```
+pip install pygame
+```
+
 ### To run the game-
 
 Simply clone the repository and execute [main.py]
