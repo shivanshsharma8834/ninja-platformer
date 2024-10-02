@@ -2,23 +2,23 @@ import pygame
 
 
 
-class PhysicsEntity: # Generic Physics Entity object
+class PhysicsEntity: 
 
-    def __init__(self,game, e_type, pos, size): # Initializes the entity object
+    def __init__(self,game, e_type, pos, size): 
 
         self.game = game
-        self.type = e_type # Entity types will be Player, Enemies, NPCs
+        self.type = e_type 
         self.pos = list(pos)
         self.size = size
         self.velocity = [0, 0]
         self.collisions = { 'up': False, 'down': False, 'right': False, 'left':False }
 
-    def rect(self):  # Rect object creator for entity class
+    def rect(self):  
 
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
 
-    def update(self,tilemap, movement=(0, 0)): # Updates the entity movement
+    def update(self,tilemap, movement=(0, 0)): 
 
         self.collisions = { 'up': False, 'down': False, 'right': False, 'left':False }
         

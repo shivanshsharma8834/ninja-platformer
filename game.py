@@ -1,14 +1,14 @@
-# Imported Main Game Libraries
+
 import pygame
 import sys
 
-# Importing other scripts to the app
+
 from scripts.entities import PhysicsEntity
 from scripts.utils import *
 from scripts.tilemap import Tilemap 
 from scripts.clouds import Clouds
 
-class Game: # Main game
+class Game: 
 
     def __init__(self):
 
@@ -16,15 +16,15 @@ class Game: # Main game
 
         pygame.display.set_caption('Ninja Game')
 
-        self.screen = pygame.display.set_mode((640,480)) # Display Window
+        self.screen = pygame.display.set_mode((640,480)) 
 
-        self.display = pygame.Surface((320,240)) # Main background Context
+        self.display = pygame.Surface((320,240)) # Background
 
-        self.clock = pygame.time.Clock() # Update Clock
+        self.clock = pygame.time.Clock() 
 
          
 
-        self.movement = [False,False] # Movement flag vectors
+        self.movement = [False,False] 
 
         self.assets = {
             'decor' : load_images('tiles/decor'),
@@ -38,7 +38,7 @@ class Game: # Main game
 
         self.clouds = Clouds(self.assets['clouds'], count=16 )
 
-        self.player = PhysicsEntity(self, 'player',(50,50),(8,15))
+        self.player = PhysicsEntity(self, 'player',(0,0),(8,15))
         
         self.tilemap = Tilemap(self,tile_size=16)
 
@@ -54,13 +54,13 @@ class Game: # Main game
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
             self.clouds.update()
-            self.clouds.render(self.display, offset=render_scroll )
+            self.clouds.render(self.display, offset=render_scroll)
 
-            self.tilemap.render(self.display, offset=render_scroll )
+            self.tilemap.render(self.display, offset=render_scroll)
 
-            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0)) # Update player variables 
-            self.player.render(self.display, offset=render_scroll ) # Render the player 
-
+            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
+            self.player.render(self.display, offset=render_scroll )
+            
             print(self.tilemap.physics_rects_around(self.player.pos))
 
             for event in pygame.event.get():
