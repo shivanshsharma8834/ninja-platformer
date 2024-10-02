@@ -13,13 +13,10 @@ class Game:
     def __init__(self):
 
         pygame.init()
-
         pygame.display.set_caption('Ninja Game')
 
         self.screen = pygame.display.set_mode((640,480)) 
-
-        self.display = pygame.Surface((320,240)) # Background
-
+        self.display = pygame.Surface((320,240)) 
         self.clock = pygame.time.Clock() 
 
          
@@ -34,7 +31,14 @@ class Game:
             'player' : load_image('entities/player.png'),
             'background' : load_image('background.png'),
             'clouds' : load_images('clouds'),
+            'player/idle' : Animation(load_images('entities/player/idle'), img_dur= 6),
+            'player/jump' : Animation(load_images('entities/player/jump'), img_dur= 4),
+            'player/run' : Animation(load_images('entities/player/run')),
+            'player/slide' : Animation(load_images('entities/player/slide')),
+            'player/wall_slide' : Animation(load_images('entities/player/wall_slide')),
         }
+
+        print(self.assets)
 
         self.clouds = Clouds(self.assets['clouds'], count=16 )
 
