@@ -15,10 +15,10 @@ pip install pygame
 
 ### To run the game-
 
-Simply clone the repository and execute [main.py]
+Simply clone the repository and execute [game.py]
 
 ```
 git clone https://github.com/shivanshsharma8834/ninja-platformer.git
 cd ninja-platformer
-python main.py
+python game.py
 ```
